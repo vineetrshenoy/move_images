@@ -35,7 +35,7 @@ data_transforms = {
     ]),
 }
 
-data_dir = 'test_train/'
+data_dir = os.path.join('blutag', 'test_train')
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}

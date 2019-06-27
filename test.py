@@ -26,17 +26,17 @@ def traintoValidation(folder, test_prct):
 
 	@return void
 	"""
-	classes = os.listdir(os.path.join('trial', folder, 'train')) #Get list of all classes in the train folder
+	classes = os.listdir(os.path.join('blutag', folder, 'train')) #Get list of all classes in the train folder
 
-	if not os.path.exists(os.path.join('trial', folder,'val')): #create a validation folder if it doesn't exists
-		os.mkdir(os.path.join('trial', folder, 'val'))
+	if not os.path.exists(os.path.join('blutag', folder,'val')): #create a validation folder if it doesn't exists
+		os.mkdir(os.path.join('blutag', folder, 'val'))
 
 	for fol in classes:		
 
-		if not os.path.exists(os.path.join('trial', folder, 'val', fol)): #create the class folder in validation if it doesn't exist
-			os.mkdir(os.path.join('trial', folder, 'val', fol))
+		if not os.path.exists(os.path.join('blutag', folder, 'val', fol)): #create the class folder in validation if it doesn't exist
+			os.mkdir(os.path.join('blutag', folder, 'val', fol))
 
-		files = absoluteFilePaths(os.path.join('trial', folder, 'train'))
+		files = absoluteFilePaths(os.path.join('blutag', folder, 'train'))
 		np.random.shuffle(files)
 		N = len(files)
 		num_valid = int(N * test_prct) #the number of files used for validation
@@ -45,7 +45,7 @@ def traintoValidation(folder, test_prct):
 
 			from_file = files[i]
 
-			to_file = os.path.join('trial', folder, 'val', fol, os.path.basename(from_file))
+			to_file = os.path.join('blutag', folder, 'val', fol, os.path.basename(from_file))
 
 			try: #try to move the file
 				os.rename(from_file, to_file)
@@ -59,18 +59,18 @@ def traintoValidation(folder, test_prct):
 
 def createFolderStructure(merchant_array):
 
-	if not os.path.exists(os.path.join('trial', 'test_train')): #create folder for training
-		os.mkdir(os.path.join('trial', 'test_train'))
+	if not os.path.exists(os.path.join('blutag', 'test_train')): #create folder for training
+		os.mkdir(os.path.join('blutag', 'test_train'))
 
-	#if not os.path.exists(os.path.join('trial', 'test_train', 'test')): #create folder for training
-		#os.mkdir(os.path.join('trial', 'test_train', 'test'))
-	if not os.path.exists(os.path.join('trial', 'test_train', 'val')): #create folder for training
-		os.mkdir(os.path.join('trial', 'test_train', 'val'))
-	if not os.path.exists(os.path.join('trial', 'test_train', 'train')): #create folder for training
-		os.mkdir(os.path.join('trial', 'test_train', 'train'))
+	#if not os.path.exists(os.path.join('blutag', 'test_train', 'test')): #create folder for training
+		#os.mkdir(os.path.join('blutag', 'test_train', 'test'))
+	if not os.path.exists(os.path.join('blutag', 'test_train', 'val')): #create folder for training
+		os.mkdir(os.path.join('blutag', 'test_train', 'val'))
+	if not os.path.exists(os.path.join('blutag', 'test_train', 'train')): #create folder for training
+		os.mkdir(os.path.join('blutag', 'test_train', 'train'))
 
 	merchant_array = [x + '_dataset' for x in merchant_array]
-	merchant_base_dict = {x: os.listdir(os.path.join('trial', x)) for x in merchant_array}
+	merchant_base_dict = {x: os.listdir(os.path.join('blutag', x)) for x in merchant_array}
 
 	total = 0
 	for item in merchant_base_dict.keys():
@@ -81,27 +81,27 @@ def createFolderStructure(merchant_array):
 
 
 	
-	folders = [os.listdir(os.path.join('trial',key, 'train')) for key in merchant_base_dict.keys()]
+	folders = [os.listdir(os.path.join('blutag',key, 'train')) for key in merchant_base_dict.keys()]
 	folders = set(reduce((lambda x,y: x + y), folders))
 
 
-	#map(lambda x: os.mkdir(os.path.join('trial', 'test_train', 'test', x)), folders)
-	map(lambda x: os.mkdir(os.path.join('trial', 'test_train', 'val', x)), folders)
-	map(lambda x: os.mkdir(os.path.join('trial', 'test_train', 'train', x)), folders)
+	#map(lambda x: os.mkdir(os.path.join('blutag', 'test_train', 'test', x)), folders)
+	map(lambda x: os.mkdir(os.path.join('blutag', 'test_train', 'val', x)), folders)
+	map(lambda x: os.mkdir(os.path.join('blutag', 'test_train', 'train', x)), folders)
 
 
 	for key in merchant_base_dict.keys():
 
 		for ft in ['val', 'train']:
 
-			folders = os.listdir(os.path.join('trial', key, ft))
+			folders = os.listdir(os.path.join('blutag', key, ft))
 
 			for fol in folders:
 
-				copy_tree(os.path.join('trial', key, ft, fol), os.path.join('trial','test_train', ft, fol))
+				copy_tree(os.path.join('blutag', key, ft, fol), os.path.join('blutag','test_train', ft, fol))
 
 
-	shutil.make_archive('trial', 'test_train', 'zip', 'test_train')
+	shutil.make_archive('blutag', 'test_train', 'zip', 'test_train')
 
 
 	x = 5
@@ -113,7 +113,7 @@ def createFolderStructure(merchant_array):
 if __name__ == '__main__':
 	
 
-	all_folders = os.listdir(os.path.join(os.getcwd(), 'trial'))
+	all_folders = os.listdir(os.path.join(os.getcwd(), 'blutag'))
 	
 	for fol in all_folders:
 
